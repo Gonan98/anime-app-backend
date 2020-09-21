@@ -94,4 +94,42 @@ authController.getPofile = async (req, res) => {
 
 }
 
+authController.editProfile = async (req, res) => {
+
+    try {
+        const { password, newPassword } = req.body;
+
+        if (!newPassword) {
+            return res.status(400).json({
+                ok: false,
+                message: 'Ingresar nueva contraseña'
+            });
+        }
+
+        const user = await User.findById(req.user_id);
+        const isCorrect = user.validatePassword(password);
+
+        if(!isCorrect) {
+            return res.status(400).json({
+                ok: false,
+                message: 'Contraseñas no coinciden'
+            });
+        }
+
+        user.password = user.encryptPassword(newPassword);
+        await user.save();
+
+        res.status(200).json({
+            ok: true,
+            message: 'Contraseña actualizada'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Error en el servidor'
+        });
+    }
+}
+
 module.exports = authController;

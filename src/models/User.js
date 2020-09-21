@@ -17,13 +17,9 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    animes: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Anime'
-        }
-    ]
+    }
+}, {
+    timestamps: true
 });
 
 userSchema.methods.encryptPassword = (password) => {
@@ -31,7 +27,7 @@ userSchema.methods.encryptPassword = (password) => {
     return bcrypt.hashSync(password, salt);
 }
 
-userSchema.methods.validatePassword = function(password) {
+userSchema.methods.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 }
 

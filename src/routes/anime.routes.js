@@ -3,10 +3,10 @@ const router = Router();
 const animeController = require("../controllers/anime.controller");
 const {verifyToken} = require('../middlewares/authentication');
 
-router.get('/api/animes', verifyToken, animeController.getUserAnimes);
-router.post('/api/animes', verifyToken, animeController.saveUserAnime);
-
-router.get('/api/animes/:id', verifyToken, animeController.getUserAnimeById);
-router.delete('/api/animes/:id', verifyToken, animeController.deleteUserAnime);
+router.get('/api/animes', verifyToken, animeController.getAnimes);
+router.post('/api/animes', verifyToken, animeController.saveAnime);
+router.get('/api/animes/status/:status', verifyToken, animeController.getAnimesByStatus);
+router.get('/api/animes/:id', verifyToken, animeController.getAnimeById);
+router.delete('/api/animes/:id', verifyToken, animeController.deleteAnime);
 
 module.exports = router;

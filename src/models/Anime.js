@@ -9,13 +9,7 @@ const animeSchema = new Schema({
     synopsis: String,
     episodes: Number,
     image_url: String,
-    type: String,
-    users: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ]
+    type: String
 });
 
 module.exports = model('Anime', animeSchema);
