@@ -32,7 +32,7 @@ authController.signUp = async (req, res) => {
         password
     });
 
-    newUser.password = newUser.encryptPassword(newUser.password);
+    newUser.password = await newUser.encryptPassword(newUser.password);
     await newUser.save();
 
     res.status(201).json({
@@ -60,7 +60,7 @@ authController.signIn = async (req, res) => {
         });
     }
 
-    const isCorrect = user.validatePassword(password);
+    const isCorrect = await user.validatePassword(password);
 
     if(!isCorrect) {
         return res.status(400).json({

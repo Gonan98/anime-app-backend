@@ -122,10 +122,40 @@ animeController.saveAnime = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             ok: false,
-            error
+            message: 'Error en el servidor'
         });
     }
 
+}
+
+animeController.updateAnime = async (req, res) => {
+
+    try {
+
+        const { status } = req.body;
+
+        const userAnimeDB = await UserAnime.findOneAndUpdate({anime: req.params.id}, {status});
+
+        if (!userAnimeDB) {
+            return res.status(400).json({
+                ok: false,
+                message: 'Anime a actualizar no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            ok: true,
+            message: 'Anime actualizado'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Error en el servidor'
+        });
+    }
+
+    res.send('Anime Actualizado');
 }
 
 animeController.deleteAnime = async (req, res) => {
